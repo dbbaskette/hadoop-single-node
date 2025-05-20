@@ -4,3 +4,6 @@ project-instructions.txt
 *.swp
 *.swo
 .DS_Store
+
+# Local development directory
+local/
