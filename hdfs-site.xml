@@ -58,9 +58,9 @@
         <description>DataNode Web UI binding address and port (default internal port).</description>
     </property>
 
-    <!-- <property>
+    <property>
         <name>dfs.datanode.hostname</name>
-        <value>localhost</value>
+        <value>hadoop</value>
     </property>
     <property>
         <name>dfs.datanode.use.datanode.hostname</name>
@@ -69,7 +69,7 @@
     <property>
         <name>dfs.client.use.datanode.hostname</name>
         <value>true</value>
-    </property> -->
+    </property>
 
 
 

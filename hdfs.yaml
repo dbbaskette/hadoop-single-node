@@ -6,19 +6,19 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hadoop-single-node
+  name: hadoop
   namespace: scdf
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hadoop-hdfs
+      app: hadoop
   template:
     metadata:
       labels:
-        app: hadoop-hdfs
+        app: hadoop
     spec:
-      hostname: localhost
+      hostname: hadoop
       containers:
         - name: hadoop
           #image: dbbaskette/hadoop-gemini:latest
@@ -39,12 +39,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hadoop-hdfs-service
+  name: hadoop-service
   namespace: scdf
 spec:
   type: NodePort
   selector:
-    app: hadoop-hdfs
+    app: hadoop
   ports:
     - name: namenode-rpc
       protocol: TCP
@@ -66,3 +66,8 @@ spec:
       port: 30864       # Internal port for DataNode Web UI (matches DN default)
       targetPort: 30864 # Container port for DataNode Web UI (DN listens on this now)
       nodePort: 30864  # Fixed NodePort for external access
+    - name: datanode-ipc
+      protocol: TCP
+      port: 30867       # Internal port for DataNode IPC (matches DN default)
+      targetPort: 30867 # Container port for DataNode IPC (DN listens on this now)
+      nodePort: 30867  # Fixed NodePort for external access
