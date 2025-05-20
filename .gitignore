@@ -1,0 +1,6 @@
+# Ignore project instructions and editor files
+instructions.txt
+project-instructions.txt
+*.swp
+*.swo
+.DS_Store

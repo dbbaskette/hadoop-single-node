@@ -1,0 +1,77 @@
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+        <description>Default block replication.</description>
+    </property>
+
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/hadoop/dfs/name</value>
+        <description>Directory where the NameNode stores its metadata.</description>
+    </property>
+
+
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/hadoop/dfs/data</value>
+        <description>Directory where the DataNode stores its blocks, tagged as DISK storage.</description>
+    </property>
+
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
+        <description>Disable HDFS permissions for easier testing. NOT FOR PRODUCTION.</description>
+    </property>
+
+    <property>
+        <name>dfs.namenode.rpc-address</name>
+        <value>0.0.0.0:9000</value>
+        <description>NameNode RPC address and port.</description>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>0.0.0.0:9870</value>
+        <description>NameNode Web UI address and port.</description>
+    </property>
+
+    <property>
+        <name>dfs.datanode.address</name>
+        <value>0.0.0.0:30866</value>
+        <description>DataNode data transfer binding address and port (default internal port).</description>
+    </property>
+
+    <property>
+        <name>dfs.datanode.report.address</name>
+        <value>127.0.0.1:30866</value> <description>Address the DataNode reports to the NameNode for client connections (hostname:NodePort).</description>
+    </property>
+
+    <property>
+        <name>dfs.datanode.ipc.address</name>
+        <value>0.0.0.0:9867</value>
+        <description>DataNode IPC binding address and port (default internal port).</description>
+    </property>
+
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>0.0.0.0:30864</value>
+        <description>DataNode Web UI binding address and port (default internal port).</description>
+    </property>
+
+    <!-- <property>
+        <name>dfs.datanode.hostname</name>
+        <value>localhost</value>
+    </property>
+    <property>
+        <name>dfs.datanode.use.datanode.hostname</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.client.use.datanode.hostname</name>
+        <value>true</value>
+    </property> -->
+
+
+
+</configuration>
+

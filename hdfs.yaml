@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: scdf
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hadoop-single-node
+  namespace: scdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hadoop-hdfs
+  template:
+    metadata:
+      labels:
+        app: hadoop-hdfs
+    spec:
+      hostname: localhost
+      containers:
+        - name: hadoop
+          #image: dbbaskette/hadoop-gemini:latest
+          image: dbbaskette/hadoop-single-node:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000 # NameNode RPC
+              name: nn-rpc
+            - containerPort: 9870 # NameNode Web UI
+              name: nn-webui
+            - containerPort: 30866 # DataNode Data Transfer (default internal port)
+              name: dn-data
+            - containerPort: 30867 # DataNode IPC (default internal port)
+              name: dn-ipc
+            - containerPort: 30864 # DataNode Web UI (default internal port)
+              name: dn-webui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-hdfs-service
+  namespace: scdf
+spec:
+  type: NodePort
+  selector:
+    app: hadoop-hdfs
+  ports:
+    - name: namenode-rpc
+      protocol: TCP
+      port: 9000       # Internal port for NameNode RPC
+      targetPort: 9000 # Container port for NameNode RPC
+      nodePort: 30800  # Fixed NodePort for external access
+    - name: namenode-webui
+      protocol: TCP
+      port: 9870       # Internal port for NameNode Web UI
+      targetPort: 9870 # Container port for NameNode Web UI
+      nodePort: 30870  # Fixed NodePort for external access
+    - name: datanode-data
+      protocol: TCP
+      port: 30866       # Internal port for DataNode data transfer (matches DN default)
+      targetPort: 30866 # Container port for DataNode data transfer (DN listens on this now)
+      nodePort: 30866  # Fixed NodePort for external access
+    - name: datanode-webui
+      protocol: TCP
+      port: 30864       # Internal port for DataNode Web UI (matches DN default)
+      targetPort: 30864 # Container port for DataNode Web UI (DN listens on this now)
+      nodePort: 30864  # Fixed NodePort for external access
