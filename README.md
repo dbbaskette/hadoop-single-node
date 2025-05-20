@@ -1,6 +1,16 @@
-# Hadoop Single Node Project
+<div align="center">
+  <img src="images/logo.png" alt="Hadoop Single Node" width="300">
+  <h1>Hadoop Single Node Project</h1>
+</div>
 
 This project provides a single-node Hadoop environment, suitable for development, testing, and educational purposes. It is containerized with Docker for ease of setup and management.
+
+## Important Note for Local Development
+Before starting, add the following line to your `/etc/hosts` file to enable hostname resolution for the container:
+```
+127.0.0.1   localhost hadoop
+```
+This allows you to connect to the container using the hostname `hadoop` from your local machine.
 
 ## Features
 - Single-node Hadoop deployment
@@ -18,14 +28,23 @@ This project provides a single-node Hadoop environment, suitable for development
 # Build the Docker image
 ./build.sh
 
-# Run the container
-# (You may need to adjust volume mounts or ports as needed)
+# Run the container with necessary port mappings
 docker run -it --rm \
+  --hostname hadoop \
+  -p 30800:9000 \
+  -p 30870:9870 \
+  -p 30866:30866 \
+  -p 30864:30864 \
   -v "$PWD/hdfs-site.xml:/etc/hadoop/hdfs-site.xml" \
   -v "$PWD/core-site.xml:/etc/hadoop/core-site.xml" \
   -v "$PWD/hdfs.yaml:/etc/hadoop/hdfs.yaml" \
   hadoop-single-node
 ```
+
+### Accessing Hadoop Services
+- **NameNode Web UI**: http://hadoop:30870
+- **DataNode Web UI**: http://hadoop:30864
+- **HDFS (RPC)**: hdfs://hadoop:30800
 
 ### Entrypoint
 The container uses `docker-entrypoint.sh` to initialize and start Hadoop services. You can modify this script for custom startup behavior.
